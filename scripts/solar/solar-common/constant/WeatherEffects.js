@@ -1,0 +1,25 @@
+var WeatherEffects;
+(function (WeatherEffects) {
+    WeatherEffects[WeatherEffects["ASHENVALE_HEAVY_RAIN"] = FourCC("RAhr")] = "ASHENVALE_HEAVY_RAIN";
+    WeatherEffects[WeatherEffects["ASHENVALE_LIGHT_RAIN"] = FourCC("RAlr")] = "ASHENVALE_LIGHT_RAIN";
+    WeatherEffects[WeatherEffects["DALARAN_SHIELD"] = FourCC("MEds")] = "DALARAN_SHIELD";
+    WeatherEffects[WeatherEffects["DUNGEON_BLUE_FOG_HEAVY"] = FourCC("FDbh")] = "DUNGEON_BLUE_FOG_HEAVY";
+    WeatherEffects[WeatherEffects["DUNGEON_BLUE_FOG_LIGHT"] = FourCC("FDbl")] = "DUNGEON_BLUE_FOG_LIGHT";
+    WeatherEffects[WeatherEffects["DUNGEON_GREEN_FOG_HEAVY"] = FourCC("FDgh")] = "DUNGEON_GREEN_FOG_HEAVY";
+    WeatherEffects[WeatherEffects["DUNGEON_GREEN_FOG_LIGHT"] = FourCC("FDgl")] = "DUNGEON_GREEN_FOG_LIGHT";
+    WeatherEffects[WeatherEffects["DUNGEON_RED_FOG_HEAVY"] = FourCC("FDrh")] = "DUNGEON_RED_FOG_HEAVY";
+    WeatherEffects[WeatherEffects["DUNGEON_RED_FOG_LIGHT"] = FourCC("FDrl")] = "DUNGEON_RED_FOG_LIGHT";
+    WeatherEffects[WeatherEffects["DUNGEON_WHITE_FOG_HEAVY"] = FourCC("FDwh")] = "DUNGEON_WHITE_FOG_HEAVY";
+    WeatherEffects[WeatherEffects["DUNGEON_WHITE_FOG_WEAK"] = FourCC("FDwl")] = "DUNGEON_WHITE_FOG_WEAK";
+    WeatherEffects[WeatherEffects["LORDAERON_HEAVY_RAIN"] = FourCC("RLhr")] = "LORDAERON_HEAVY_RAIN";
+    WeatherEffects[WeatherEffects["LORDAERON_LIGHT_RAIN"] = FourCC("RLlr")] = "LORDAERON_LIGHT_RAIN";
+    WeatherEffects[WeatherEffects["NORTHREND_BLIZZARD"] = FourCC("SNbs")] = "NORTHREND_BLIZZARD";
+    WeatherEffects[WeatherEffects["NORTHREND_HEAVY_SNOW"] = FourCC("SNhs")] = "NORTHREND_HEAVY_SNOW";
+    WeatherEffects[WeatherEffects["NORTHREND_LIGHT_SNOW"] = FourCC("SNls")] = "NORTHREND_LIGHT_SNOW";
+    WeatherEffects[WeatherEffects["RAYS_OF_LIGHT"] = FourCC("LRaa")] = "RAYS_OF_LIGHT";
+    WeatherEffects[WeatherEffects["RAYS_OF_MOONLIGHT"] = FourCC("LRma")] = "RAYS_OF_MOONLIGHT";
+    WeatherEffects[WeatherEffects["WEATHER_WIND"] = FourCC("WNcw")] = "WEATHER_WIND";
+    WeatherEffects[WeatherEffects["WEATHER_OUTLAND_WIND"] = FourCC("WOcw")] = "WEATHER_OUTLAND_WIND";
+    WeatherEffects[WeatherEffects["WEATHER_OUTLAND_WIND_LIGHT"] = FourCC("WOlw")] = "WEATHER_OUTLAND_WIND_LIGHT";
+})(WeatherEffects || (WeatherEffects = {}));
+export default WeatherEffects;

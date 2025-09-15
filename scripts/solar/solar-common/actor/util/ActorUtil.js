@@ -1,0 +1,264 @@
+import Actor from "@/Actor";
+import DataBase from "@/DataBase";
+/**
+ * 演员通常最终作用于单位身上。（事实上所有游戏 所有数据 所有逻辑 最终的表现几乎都是在单位身上）
+ * 优先使用此演员工具 不要把演员局限到技能或物品上 这样会导致演员不够统一 也不利于转换结构 比如吞噬这些 要保证无论是演员技能还是演员物品 都应该是一样的 所以优先考虑把逻辑代码写到演员基类里
+ */
+export default class ActorUtil {
+    /**
+     * 根据演员的全局唯一id获取演员对象
+     * @param uuid
+     */
+    static getActor(uuid) {
+        return Actor.allActors[uuid];
+    }
+    /**
+     * 返回一个单位包含的所有演员  数据
+     * 包括 演员单位 演员技能 演员物品 演员buff
+     * 可以用来执行跟单位相关的通用逻辑  比如销毁单位时 或单位触发基础事件时 通用分发
+     * @param unit
+     */
+    static getUnitAllActorList(unit) {
+        if (!IsHandle(unit)) {
+            return null;
+        }
+        let actorList = null;
+        let solarData = DataBase.getUnitSolarData(unit, false);
+        if (solarData != null) {
+            //单位
+            let actor = solarData._SL_solarActorUnit;
+            if (actor != null) {
+                actorList = [actor];
+            }
+            //技能
+            let actorAbilitys = solarData._SL_solarActorAbilitys;
+            if (actorAbilitys != null) {
+                if (actorList == null) {
+                    actorList = [];
+                }
+                for (let abilityTemplateKey in actorAbilitys) {
+                    let actor = actorAbilitys[abilityTemplateKey];
+                    if (actor != null) {
+                        actorList.push(actor);
+                    }
+                }
+            }
+            //演员buff
+            let _SL_solarActorBuffSet = solarData._SL_solarActorBuffs;
+            if (_SL_solarActorBuffSet) {
+                for (let actor of _SL_solarActorBuffSet) {
+                    if (actorList == null) {
+                        actorList = [];
+                    }
+                    actorList.push(actor);
+                }
+            }
+        }
+        let invSize = UnitInventorySize(unit);
+        for (let i = 0; i < invSize; i++) {
+            let item = UnitItemInSlot(unit, i);
+            if (IsHandle(item)) {
+                let actor = DataBase.getItemSolarData(item, false)?._SL_solarActorItem;
+                if (actor != null) {
+                    if (actorList == null) {
+                        actorList = [];
+                    }
+                    actorList.push(actor);
+                }
+            }
+        }
+        return actorList;
+    }
+    /**
+     * 遍历单位身上的所有演员
+     * @param unit
+     * @param callback
+     * @param clazz
+     */
+    static forUnitAllActorList(unit, callback, clazz) {
+        let actorList = ActorUtil.getUnitAllActorList(unit);
+        if (actorList == null) {
+            return;
+        }
+        for (let i = actorList.length - 1; i >= 0; i--) {
+            let actor = actorList[i];
+            if (clazz == null || clazz == actor.get("class")) {
+                callback(actor);
+            }
+        }
+    }
+    /**
+     * 获取单位身上的所有演员 (指定演员类型 id)
+     * @param unit
+     * @param actorTypeId
+     */
+    static getUnitAllActorListByActorTypeId(unit, actorTypeId) {
+        let actorList = ActorUtil.getUnitAllActorList(unit);
+        if (actorList == null) {
+            return;
+        }
+        let result = [];
+        for (let i = actorList.length - 1; i >= 0; i--) {
+            let actor = actorList[i];
+            if (actorTypeId == null || actorTypeId == actor.actorTypeId) {
+                result.push(actor);
+            }
+        }
+        return result;
+    }
+    /**
+     * 获取单位身上的所有演员 (指定演员类型 Class)
+     * @param unit
+     * @param clazz 同Class
+     */
+    static getUnitAllActorListByClass(unit, clazz) {
+        let actorList = ActorUtil.getUnitAllActorList(unit);
+        if (actorList == null) {
+            return;
+        }
+        let result = [];
+        for (let i = actorList.length - 1; i >= 0; i--) {
+            let actor = actorList[i];
+            if (clazz == null || clazz == actor.get("class")) {
+                result.push(actor);
+            }
+        }
+        return result;
+    }
+    /**
+     * 获取单位身上的所有演员 (指定演员类型 Class)
+     * @param unit
+     * @param clazz 同Class
+     * @param kind
+     * @param tag
+     */
+    static getUnitAllActorListAndWhere(unit, clazz, kind, tag) {
+        let actorList = ActorUtil.getUnitAllActorList(unit);
+        if (actorList == null) {
+            return;
+        }
+        let result = [];
+        for (let i = actorList.length - 1; i >= 0; i--) {
+            let actor = actorList[i];
+            if (clazz != null && clazz != actor.get("class")) {
+                continue;
+            }
+            if (kind != null && kind != actor.get("kind")) {
+                continue;
+            }
+            if (tag != null && tag != actor.get("tag")) {
+                continue;
+            }
+            result.push(actor);
+        }
+        return result;
+    }
+    /**
+     * 获取单位身上所有演员 的属性值
+     * @param unit
+     */
+    static getUnitAllActorAttributes(unit) {
+        let attributeArray = null;
+        let solarData = DataBase.getUnitSolarData(unit, false);
+        if (solarData != null) {
+            //单位
+            let attribute = solarData._SL_solarActorUnit?.attribute;
+            if (attribute != null) {
+                attributeArray = [attribute];
+            }
+            //技能
+            let actorAbilitys = solarData._SL_solarActorAbilitys;
+            if (actorAbilitys != null) {
+                if (attributeArray == null) {
+                    attributeArray = [];
+                }
+                for (let abilityTemplateKey in actorAbilitys) {
+                    let attribute = actorAbilitys[abilityTemplateKey];
+                    if (attribute != null) {
+                        attributeArray.push(attribute);
+                    }
+                }
+            }
+            //演员buff
+            let _SL_solarActorBuffSet = solarData._SL_solarActorBuffs;
+            if (_SL_solarActorBuffSet) {
+                for (let actorBuff of _SL_solarActorBuffSet) {
+                    let attribute = actorBuff.attribute;
+                    if (attribute != null) {
+                        if (attributeArray == null) {
+                            attributeArray = [];
+                        }
+                        attributeArray.push(attribute);
+                    }
+                }
+            }
+        }
+        let invSize = UnitInventorySize(unit);
+        for (let i = 0; i < invSize; i++) {
+            let item = UnitItemInSlot(unit, i);
+            if (IsHandle(item)) {
+                let attribute = DataBase.getItemSolarData(item, false)?._SL_solarActorItem?.attribute;
+                if (attribute != null) {
+                    if (attributeArray == null) {
+                        attributeArray = [];
+                    }
+                    attributeArray.push(attribute);
+                }
+            }
+        }
+        return attributeArray;
+    }
+    /**
+     * 如果单位是否持有某个类型的演员
+     * @param unit
+     * @param callBack
+     * @param actorTypeId
+     */
+    static ifUnitHasActor(unit, actorTypeId, callBack) {
+        let unitAllActorList = ActorUtil.getUnitAllActorList(unit);
+        if (unitAllActorList == null) {
+            return;
+        }
+        for (let actor of unitAllActorList) {
+            if (actor.actorTypeId == actorTypeId) {
+                callBack(actor);
+                return;
+            }
+        }
+    }
+    /**
+     * 判断单位是否持有某个类型的演员(物品 技能 buff)
+     * @param unit
+     * @param actorTypeId
+     */
+    static isUnitHasActor(unit, actorTypeId) {
+        let unitAllActorList = ActorUtil.getUnitAllActorList(unit);
+        if (unitAllActorList == null) {
+            return false;
+        }
+        for (let actor of unitAllActorList) {
+            if (actor.actorTypeId == actorTypeId) {
+                return true;
+            }
+        }
+        return false;
+    }
+    /**
+     * 添加任意演员创建事件 监听回调
+     */
+    static addAnyActorCreatedListener(onActorCreatedListener) {
+        Actor._sl_anyActorCreatedListeners.push(onActorCreatedListener);
+    }
+    /**
+     * 添加任意演员叠加层数改变事件 监听回调
+     */
+    static addAnyActorLevelChangeListener(onActorLevelChangeListener) {
+        Actor._sl_anyActorLevelChangeListeners.push(onActorLevelChangeListener);
+    }
+    /**
+     * 添加任意演员销毁事件 监听回调
+     */
+    static addAnyActorDestroyListener(onActorDestroyListener) {
+        Actor._sl_anyActorDestroyListeners.push(onActorDestroyListener);
+    }
+}
