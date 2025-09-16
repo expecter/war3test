@@ -1,3 +1,4 @@
+import 技能书学习到QWER栏位 from "xlsx/系统/技能书学习到QWER栏位";
 import 进攻怪演员 from "xlsx/敌人怪物/进攻怪演员";
 import 开局选择英雄角色 from "xlsx/系统/开局选择英雄角色";
 import 选择单位类型池 from "xlsx/系统/选择单位类型池";
@@ -11,4 +12,5 @@ export default function StateConfigInit() {
     选择单位类型池();
     开局选择英雄角色();
     进攻怪演员();
+    技能书学习到QWER栏位();
 }

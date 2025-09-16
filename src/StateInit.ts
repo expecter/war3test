@@ -1,3 +1,4 @@
+import 技能书学习到QWER栏位 from "state/系统/技能书学习到QWER栏位";
 import AutoTest from "script/AutoTest";
 import 怪物自动进攻 from "script/怪物自动进攻";
 import 开局选择英雄角色 from "state/基础/开局选择英雄角色";
@@ -11,4 +12,5 @@ export default function StateInit() {
     }else{
         new 开局选择英雄角色();
     }
+    new 技能书学习到QWER栏位();
 }
