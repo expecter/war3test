@@ -13,6 +13,8 @@ import 进攻怪演员, { d_进攻怪演员 } from "xlsx/敌人怪物/进攻怪�
             return true
         })
         怪物自动进攻.Attack(l_进攻怪路线)
+        //全图根据时间创建怪物，怪物出生在主角周围跟着主角
+        
     }
     static Attack(line:Vector[]){
         for(let i = 0;i<line.length;i++){
