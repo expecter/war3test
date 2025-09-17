@@ -35,6 +35,9 @@ export default class AppTest {
             se.playerChat("cs", () => {
                 DebugCheckSyncUtil.start()
             })
+            se.playerChat("auto", () => {
+                isAuto = true
+            })
             se.playerChat("t11", () => {
                 YiYiApiJassImpl.init()
                 FrameCallbackUtil.addFrameSetUpdateCallback(() => {

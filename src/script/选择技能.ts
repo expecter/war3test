@@ -16,9 +16,14 @@ export default class 选择技能{
     SkillPanel(unitEvent:UnitEvent){
         let buttonTexts = ["test1","test2"]
         let skillId = 0
-        DialogUtil.show(unitEvent.trigUnitOwnerId, "选择技能", (i, text) => {
-            this.LearnSkill(unitEvent.trigUnit,skillId)
-        }, ...buttonTexts)
+        if(isAuto){
+
+        }else{
+            DialogUtil.show(unitEvent.trigUnitOwnerId, "选择技能", (i, text) => {
+                this.LearnSkill(unitEvent.trigUnit,skillId)
+            }, ...buttonTexts)
+        }
+        
     }
 
     /**
@@ -26,5 +31,9 @@ export default class 选择技能{
      */
     LearnSkill(unit:unit,skillId:number){
         SelectHeroSkill(unit,skillId)
+    }
+
+    AutoSelectSkill(){
+        
     }
 }

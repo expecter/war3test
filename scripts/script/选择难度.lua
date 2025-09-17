@@ -9,7 +9,7 @@ ____exports.default = __TS__Class()
 local _____9009_62E9_96BE_5EA6 = ____exports.default
 _____9009_62E9_96BE_5EA6.name = "选择难度"
 function _____9009_62E9_96BE_5EA6.prototype.____constructor(self)
-    if isDebug then
+    if isAuto then
         se:emit("选择难度", 0)
     else
         DialogUtil:show(

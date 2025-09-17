@@ -2,8 +2,8 @@ local ____lualib = require("lualib_bundle")
 local __TS__SourceMapTraceBack = ____lualib.__TS__SourceMapTraceBack
 __TS__SourceMapTraceBack(debug.getinfo(1).short_src, {["5"] = 3,["6"] = 3,["7"] = 18,["8"] = 18,["9"] = 18,["10"] = 18,["11"] = 18,["12"] = 18,["13"] = 18,["14"] = 18,["15"] = 18,["16"] = 18,["17"] = 18,["18"] = 18,["19"] = 18,["20"] = 18,["21"] = 18,["22"] = 18,["23"] = 18,["24"] = 18,["25"] = 18,["26"] = 18,["27"] = 18,["28"] = 18,["29"] = 18,["30"] = 18,["31"] = 18,["32"] = 18,["33"] = 18,["34"] = 18,["35"] = 18,["36"] = 18,["37"] = 132,["38"] = 136,["39"] = 138,["40"] = 139,["41"] = 140});
 local ____exports = {}
-local _____5F00_5C40_9009_62E9_82F1_96C4_89D2_8272 = require("state.基础.开局选择英雄角色")
-local _____5F00_5C40_9009_62E9_82F1_96C4_89D2_8272 = _____5F00_5C40_9009_62E9_82F1_96C4_89D2_8272.default
+local _____9009_62E9_82F1_96C4 = require("script.选择英雄")
+local _____9009_62E9_82F1_96C4 = _____9009_62E9_82F1_96C4.default
 ____exports.data = {
     {id = "Ecen", weight = 1},
     {id = "Edem", weight = 1},
@@ -38,7 +38,7 @@ ____exports["d_选择单位类型池"] = ____exports.data
 function ____exports.default(self)
     for ____, datum in ipairs(____exports.data) do
         if datum.id then
-            _____5F00_5C40_9009_62E9_82F1_96C4_89D2_8272.cfg.unitIdWeights[datum.id] = datum.weight
+            _____9009_62E9_82F1_96C4.cfg.unitIdWeights[datum.id] = datum.weight
         end
     end
 end
