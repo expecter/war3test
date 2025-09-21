@@ -2,6 +2,7 @@ import DialogUtil from "@/DialogUtil";
 import UnitEvent from "@/event/UnitEvent";
 import Random from "@/Random";
 import RandomUtil from "@/RandomUtil";
+import ActorAbilityUtil from "@/util/ActorAbilityUtil";
 import { d_显示cd的被动技能 } from "xlsx/技能/显示cd的被动技能";
 
 export default class 选择技能{
@@ -20,14 +21,17 @@ export default class 选择技能{
      * 技能选择面板
      */
     SkillPanel(unitEvent:UnitEvent){
-        let buttonTexts = ["ab01"]
+        // UnitAddAbility(unitEvent.trigUnit,"ab01")
+        let buttonTexts = ["闪现"]
         let skillId = 0
         if(isAuto){
 
         }else{
-            let playerId = GetPlayerId(GetOwningPlayer(unitEvent.trigUnit))
+            let unit = unitEvent.trigUnit
+            let playerId = GetPlayerId(GetOwningPlayer(unit))
             DialogUtil.show(playerId, "选择技能", (i, text) => {
-                this.LearnSkill(unitEvent.trigUnit,buttonTexts[i])
+                // UnitAddAbility(unit,"ab01")
+                this.LearnSkill(unit,buttonTexts[i])
             }, ...buttonTexts)
         }
     }
@@ -54,7 +58,7 @@ export default class 选择技能{
     /**
      * 学习技能，参考技能学习到qwer配置
      */
-    LearnSkill(unit:unit,skillId:string){
+     LearnSkill(unit:unit,skillId:string){
         let playerId = GetPlayerId(GetOwningPlayer(unit))
         //判断是否已经学习了这个技能
         let tmSkill = this.tmUnitSkill.get(playerId)
@@ -62,9 +66,12 @@ export default class 选择技能{
             tmSkill = new Map()
             this.tmUnitSkill.set(playerId,tmSkill)
         }
-        print(unit,skillId)
         
-        UnitAddAbility(unit,skillId)
+        print(GetOwningPlayer(unit),skillId)
+        // let res = UnitAddAbility(unit,("ab01"))
+        // UnitAddAbility(unit,skillId)
+        ActorAbilityUtil.createActorAbility(skillId,unit)
+        // print("learn ability res",res)
     }
 
     AutoSelectSkill(){
