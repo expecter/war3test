@@ -13,7 +13,6 @@ import PlayerAttributeState from "@/PlayerAttributeState";
 import PlayerUtil from "@/PlayerUtil";
 import SolarActorState from "@/SolarActorState";
 import 选择难度 from 'script/选择难度';
-import AutoTest from 'script/AutoTest';
 //这里可传入的isDebug 布尔值为是否打开控制台日志方便开发，
 //若不传值则自动推测当前地图是否为测试环境（slk后的地图不测试 在太阳编辑器打开此地图的机器测试）
 GlobalVars.init()

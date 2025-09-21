@@ -3,6 +3,7 @@ import DialogUtil from "@/DialogUtil";
 import ObjectDataUtil from "@/ObjectDataUtil";
 import PlayerUtil from "@/PlayerUtil";
 import RandomUtil from "@/RandomUtil";
+import ActorAbilityUtil from "@/util/ActorAbilityUtil";
 
 export default class 选择英雄{
     
@@ -57,6 +58,8 @@ export default class 选择英雄{
         let loc = GetPlayerStartLocationLoc(player)
         let unit = CreateUnit(player, key, GetLocationX(loc), GetLocationY(loc), 0);
         se.emit("选择英雄", unit)
+        
         sd(player).hero = unit;
+        // ActorAbilityUtil.createActorAbility("",unit)
     }
 }
