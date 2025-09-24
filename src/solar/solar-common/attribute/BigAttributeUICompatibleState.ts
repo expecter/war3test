@@ -11,7 +11,7 @@ import ExFrameApiUtil from "../util/frame/ExFrameApiUtil";
 import SingletonUtil from "../util/lang/SingletonUtil";
 import UnitStateUtil from "@/UnitStateUtil";
 
-const textFont = "Fonts\\dfst-m3u.ttf";
+
 const textHeight = 0.01;
 export default class BigAttributeUICompatibleState {
     static config = {
@@ -185,7 +185,7 @@ export default class BigAttributeUICompatibleState {
         BigAttributeUICompatibleState.unitArmorContainer = ExFrameApiUtil.createBaseFrameInSimpleFrame(DzSimpleFrameFindByName("SimpleInfoPanelIconArmor", 0))
         BigAttributeUICompatibleState.heroUIContainer = ExFrameApiUtil.createBaseFrameInSimpleFrame(NativeFrameUtil.getHeroStatePanel())
 
-
+        const textFont = settings.fontPath;
         /**
          *
          */

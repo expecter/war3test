@@ -65,7 +65,7 @@ export default class DialogUtil {
      *
      * @param playerId 显示对话框的玩家
      * @param title 对话框标题
-     * @param onClickButtonCallBack 点击对话框里的按钮时的回调
+     * @param onClickButtonCallBack 点击对话框里的按钮时的回调 index从0起始
      * @param buttonTexts 按钮文字列表[]
      * 返回的dialog 不要销毁了 以免后续其他地方使用 不生效
      */

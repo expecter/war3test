@@ -293,6 +293,12 @@ export default class UnitStateUtil {
         _sl_funs.returnTemplate("攻击目标数量辅助", templateId);
         let tempAbilityId = FourCC(templateId);
         //
+        if (targetCount == 0) {
+            if (GetUnitAbilityLevel(unitHandle, tempAbilityId) > 0) {
+                UnitRemoveAbility(unitHandle, tempAbilityId);
+            }
+            return;
+        }
         if (GetUnitAbilityLevel(unitHandle, tempAbilityId) == 0) {
             UnitAddAbility(unitHandle, tempAbilityId);
         }

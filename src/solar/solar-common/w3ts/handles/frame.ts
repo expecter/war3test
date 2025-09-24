@@ -302,7 +302,7 @@ export class Frame {
      * @param filename 路径名称
      * @param flags 默认填0
      */
-    public setFont(height: number, filename: string = "Fonts\\dfst-m3u.ttf", flags: number = 0) {
+    public setFont(height: number, filename: string = settings.fontPath, flags: number = 0) {
         DzFrameSetFont(this.current, filename, height, flags);
         this.props.font = {fileName: filename, height: height, flags: flags}
         return this;

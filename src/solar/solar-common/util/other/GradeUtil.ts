@@ -154,7 +154,7 @@ export default class GradeUtil {
      * @param id
      */
     static getUnitTypeGrade(id: string): number {
-        return DataBase.getUnitTypeSolarData(id)?.grade;
+        return DataBase.getUnitTypeSolarData(id,false)?.grade;
     }
 
     /**
@@ -162,7 +162,7 @@ export default class GradeUtil {
      * @param id
      */
     static getItemTypeGrade(id: string): number {
-        return DataBase.getItemTypeSolarData(id)?.grade;
+        return DataBase.getItemTypeSolarData(id,false)?.grade;
     }
 
 }

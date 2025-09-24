@@ -1,9 +1,12 @@
 import LangUtil from "@/LangUtil";
+import Cache from "@/Cache";
 
 /**
  * 矢量工具
  */
 export default class VectorUtil {
+
+    private static cache = new Cache();
 
     /**
      * 加法
@@ -87,6 +90,10 @@ export default class VectorUtil {
         }
         //_sl_editor.l_任务乌龟A[0]
         if (LangUtil.isString(data) && (data as string).endsWith("]")) {
+            let lineLoc = VectorUtil.cache.get(data) as any;
+            if (lineLoc) {
+                return lineLoc;
+            }
             let solarLineInfo: string = data
             let indexOf = solarLineInfo.indexOf("[");
             if (indexOf <= 0) {
@@ -97,16 +104,19 @@ export default class VectorUtil {
             let solarLineIndex: number = tonumber(solarLineInfo.substring(indexOf + 1, solarLineInfo.length - 1))
             try {
                 let _require = require;
-                let ____exports = _require(solarLineName);
-                let [key, lineVals] = next(____exports);
+                let t2LExports = _require(solarLineName);
+                let [key, lineVals] = next(t2LExports);
                 let vectors: Vector[] = (lineVals as any[])
                 if (solarLineIndex >= vectors.length) {
                     log.errorWithTraceBack("线变量长度不足![" + data + "]当前线变量最大索引为:" + (vectors.length - 1))
                     return null;
                 }
-                return vectors[solarLineIndex]
+                lineLoc = vectors[solarLineIndex];
+                VectorUtil.cache.put(data, lineLoc);
+                return lineLoc;
             } catch (e) {
-                print("线变量不存在:<" + data + ">...可在太阳rpg编辑器中双击地形画此变量名对应的线!")
+                print(e)
+                print("E:线变量不存在:<" + data + ">...可在太阳rpg编辑器中双击地形画此变量名对应的线!")
             }
         } else if (data.x && data.y) {
             return data

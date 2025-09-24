@@ -235,7 +235,7 @@ export default class ActorFrameUtil {
             if (actor.get("tag") != "光环" && actor.get("dur", 0) > 3) {
                 labelInfo.push({
                     icon: "UI\\Widgets\\BattleNet\\bnet-tournament-clock.blp",
-                    text: Math.ceil(actor.getRemainingTime()) + "秒",
+                    text: TextUtil.secondsToHMS(Math.ceil(actor.getRemainingTime())),
                 });
             }
         }

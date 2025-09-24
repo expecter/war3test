@@ -53,7 +53,7 @@ export default class StringUtil {
     }
 
     /**获取字符串的长度*/
-    public static getLength(str: string) {
+    public static getLength(str: string): number {
         let length: number = 0;
         let currentIndex: number = 1;
         while (currentIndex <= str.length) {
@@ -63,6 +63,22 @@ export default class StringUtil {
         }
         return length;
     }
+
+    /**
+     * 返回限制长度的字符串
+     * @param str
+     * @param maxLength
+     */
+    static limitLength(str: string, maxLength: number): string {
+        if (str == null) {
+            return null;
+        }
+        if (StringUtil.getLength(str) > maxLength) {
+            return StringUtil.subString(str, 0, maxLength);
+        }
+        return str;
+    }
+
 
     /**截取子字符串(索引从0开始) 支持utf8*/
     public static subString(str: string, start: number, end?: number): string {

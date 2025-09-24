@@ -3,7 +3,8 @@ import UnitEvent from "@/event/UnitEvent";
 import Random from "@/Random";
 import RandomUtil from "@/RandomUtil";
 import ActorAbilityUtil from "@/util/ActorAbilityUtil";
-import { d_显示cd的被动技能 } from "xlsx/技能/显示cd的被动技能";
+import blink from "./skill/blink";
+import { d_技能演员 } from "xlsx/单位/技能演员";
 
 export default class 选择技能{
     /**
@@ -16,6 +17,7 @@ export default class 选择技能{
            
             this.SkillPanel( unitEvent)
         })
+        new blink()
     }
     /**
      * 技能选择面板
@@ -46,9 +48,9 @@ export default class 选择技能{
         }
         let tlSkill:string[] = []
         //筛选可学习的技能，并随机
-        d_显示cd的被动技能.forEach((item)=>{
+        d_技能演员.forEach((item)=>{
             //添加规则
-            tlSkill.push(item.key)
+            tlSkill.push(item.id)
         })
 
         let tl = RandomUtil.getRandomElementByObjArrays(4,"key",tlSkill)

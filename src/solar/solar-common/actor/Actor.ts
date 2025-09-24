@@ -78,8 +78,10 @@ export default class Actor implements Destroyable {
 
     /** 产生这个演员的单位 施法者 可为空 */
     creator?: unit;
-    /** 战斗属性  */
+    /** 基础战斗属性  */
     protected _attribute?: AppAttribute;
+    /** 扩展战斗属性 如宝石 洗练词条 附魔等等  */
+    _sl_extAttributes?: { [name: string]: AppAttribute };
 
     /** 部分被动技能需要的循环计时器
      * */
@@ -123,6 +125,7 @@ export default class Actor implements Destroyable {
      * 会自动在提示后面 拼接为 "当前附加几率 10"
      * 以name为key这种方式 方便刷新提示数据
      * */
+    _sl_extDescribesFirst?: { [name: string]: string };
     _sl_extDescribes?: { [name: string]: string };
 
     /** 任意附加数据 */
@@ -196,6 +199,7 @@ export default class Actor implements Destroyable {
         }
         //
         this.level = 1;
+
     }
 
     /**
@@ -205,7 +209,7 @@ export default class Actor implements Destroyable {
         return this._actorType;
     }
 
-    get solarData(): AppSolarBuffData {
+    get solarData(): AppSolarActorData {
         return DataBase.getSolarActorSolarData(this.uuid)
     }
 
@@ -404,29 +408,29 @@ export default class Actor implements Destroyable {
         return GetPlayerId(GetOwningPlayer(this._sl_unit))
     }
 
-    /**
-     * 获取释放点x
-     * （示例:在onAction中可以使用）
-     */
-    getSpellTargetX() {
-        return GetSpellTargetX();
-    }
-
-    /**
-     * 获取释放点y
-     * （示例:在onAction中可以使用）
-     */
-    getSpellTargetY() {
-        return GetSpellTargetY();
-    }
-
-    /**
-     * 获取技能释放目标
-     * （示例:在onAction中可以使用）
-     */
-    getSpellTargetUnit() {
-        return GetSpellTargetUnit();
-    }
+    // /**
+    //  * 获取释放点x
+    //  * （示例:在onAction中可以使用）
+    //  */
+    // getSpellTargetX() {
+    //     return GetSpellTargetX();
+    // }
+    //
+    // /**
+    //  * 获取释放点y
+    //  * （示例:在onAction中可以使用）
+    //  */
+    // getSpellTargetY() {
+    //     return GetSpellTargetY();
+    // }
+    //
+    // /**
+    //  * 获取技能释放目标
+    //  * （示例:在onAction中可以使用）
+    //  */
+    // getSpellTargetUnit() {
+    //     return GetSpellTargetUnit();
+    // }
 
     /**
      * 获取该演员对应的ui 根Frame （该ui会自动在合适的位置显示和隐藏 技能就是在技能按钮上 物品就是在物品按钮上）
@@ -478,6 +482,9 @@ export default class Actor implements Destroyable {
     }
 
     set level(value) {
+        if (value == null) {
+            return;
+        }
         let delta = value - (this._sl_level || 0)
         this._sl_level = value;
         //任意actor等级改变事件
@@ -566,7 +573,12 @@ export default class Actor implements Destroyable {
         if (this.extDescribeFirst1 && this.extDescribeFirst1.length > 0) {
             realDescribe = this.extDescribeFirst1 + "|r|n" + realDescribe;
         }
-
+        if (this._sl_extDescribesFirst) {
+            //排序遍历 以免每次游戏的 提示顺序不一样 影响体验
+            LangUtil.forEachSort(this._sl_extDescribesFirst, (name, text) => {
+                realDescribe = name + text + "|r|n" + realDescribe;
+            });
+        }
         if (this.extDescribeLast1 && this.extDescribeLast1.length > 0) {
             realDescribe += "|r|n" + this.extDescribeLast1;
         }
@@ -580,6 +592,33 @@ export default class Actor implements Destroyable {
             });
         }
         return realDescribe;
+    }
+
+    /**
+     * 设置扩展的提示信息 在某些地方 如鼠标移上物品技能按钮时 会显示这些信息
+     * @param name
+     * @param text
+     */
+    setExtDescribeFirst(name: string, text: string) {
+        if (this._sl_extDescribesFirst == null) {
+            this._sl_extDescribesFirst = {};
+        }
+        this._sl_extDescribesFirst[name] = text;
+    }
+
+    /**
+     * 移除某个扩展提示
+     * @param name
+     */
+    removeExtDescribeFirst(name: string) {
+        deleteKey(this._sl_extDescribesFirst, name);
+    }
+
+    /**
+     * 清空所有扩展提示
+     */
+    clearExtDescribesFirst() {
+        LangUtil.clearObject(this._sl_extDescribesFirst)
     }
 
     /**
@@ -607,6 +646,33 @@ export default class Actor implements Destroyable {
      */
     clearExtDescribes() {
         LangUtil.clearObject(this._sl_extDescribes)
+    }
+
+    /**
+     * 设置扩展的属性 如 宝石 附魔等等
+     * @param name
+     * @param attribute
+     */
+    setExtAttribute(name: string, attribute: AppAttribute) {
+        if (this._sl_extAttributes == null) {
+            this._sl_extAttributes = {};
+        }
+        this._sl_extAttributes[name] = attribute;
+    }
+
+    /**
+     * 移除某个扩展的属性
+     * @param name
+     */
+    removeExtAttribute(name: string) {
+        deleteKey(this._sl_extAttributes, name);
+    }
+
+    /**
+     * 清空所有扩展的属性
+     */
+    clearExtAttributes() {
+        LangUtil.clearObject(this._sl_extAttributes)
     }
 
 

@@ -68,12 +68,10 @@ export default class Develop {
         BaseUtil.runLater(0.01, () => {
             if (Develop._sl_egp_enable) {
                 try {
-                    PACKAGE.path = tostring(local_map_dir_path || "") + 'scripts\\?.lua;' +
-                        tostring(local_map_dir_path || "") + '\\?.lua;' +
-                        PACKAGE.path + ';_sre\\?.lua;'
+                    PACKAGE.path = PACKAGE.path + ';_sre\\?.lua;'
                     _require("_sl_egp._sl_egp")
                 } catch (e) {
-                    print("提示：更新此地图太阳TS框架可以启用编辑器调试工具插件!")
+                    print("提示：更新此地图太阳TS框架可以启用编辑器调试工具插件!!")
                 }
             }
         })

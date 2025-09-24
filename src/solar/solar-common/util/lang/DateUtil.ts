@@ -1,5 +1,22 @@
+import NumberUtil from "@/NumberUtil";
+
 export default class DateUtil {
 
+    /**
+     * 最近的已过时间
+     * 时间减去这个时间点  可以节省存储
+     */
+    static startBaseTime_RecentTimePassed = 1757488714;//Wed Sep 10 2025 15:18:34 GMT+0800
+
+    /**
+     * 尽可能的生成唯一id
+     * 根据当前时间+随机数生成
+     */
+    static generateUUIDByTime(): string {
+        let timeSec = DateUtil.getGameStartTime() - DateUtil.startBaseTime_RecentTimePassed;
+        timeSec += (Math.floor(_g_time / 1000));
+        return NumberUtil.toUnsignedString(timeSec, 86) + ":" + NumberUtil.toUnsignedString(GetRandomInt(1, 614124), 86);
+    }
 
     /**
      * 游戏开始时间

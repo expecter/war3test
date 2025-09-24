@@ -9,6 +9,8 @@ import SingletonUtil from "@/SingletonUtil";
 import BaseUtil from "@/BaseUtil";
 import ActorItem from "@/ActorItem";
 import ActorBuff from "@/ActorBuff";
+import GameCenter from "@/GameCenter";
+import ActorUtil from "@/ActorUtil";
 
 export default class SolarActorAttributeState {
 
@@ -19,8 +21,8 @@ export default class SolarActorAttributeState {
      * resultAttribute 初始为复制的ActorItem.attribute
      * 处理器通常应直接return resultAttribute
      */
-    static itemAttributeHandlers: ((actor: ActorItem, resultAttribute: AppAttribute) => AppAttribute)[] = [];
-    static buffAttributeHandlers: ((actor: ActorBuff, resultAttribute: AppAttribute) => AppAttribute)[] = [];
+    static itemAttributeHandlers: ActorAttributeHandler[] = [];
+    static buffAttributeHandlers: ActorAttributeHandler[] = [];
     /** 启用装备属性 (部分Orpg模拟穿戴装备的可以使用false 禁用物品栏里的演员物品属性效果) */
     static enableItemAttribute = true;
 
@@ -51,9 +53,10 @@ export default class SolarActorAttributeState {
         //实时刷新
         se.on("属性刷新", () => {
             //遍历所有
-            DataBase.forUnitSolarDatas((u, solarData: AppData) => {
-                SolarActorAttributeState.refreshActorAttributes2UnitSolarAttribute(u)
-            })
+            let allUnits = GameCenter.getAllUnits();
+            for (let unitHandle of allUnits) {
+                SolarActorAttributeState.refreshActorAttributes2UnitSolarAttribute(unitHandle);
+            }
         })
         //实时刷新
         ActorBuffUtil.addAnyActorBuffCreatedListener(buff => {
@@ -115,6 +118,7 @@ export default class SolarActorAttributeState {
     static getUnitAllActorAttributes(unit: unit): AppAttribute[] {
         let attributeArray: AppAttribute[] = null;
         let solarData = DataBase.getUnitSolarData(unit, false);
+
         if (solarData != null) {
             //单位
             let attribute: AppAttribute = solarData._SL_solarActorUnit?.attribute;
@@ -128,29 +132,14 @@ export default class SolarActorAttributeState {
                     attributeArray = [];
                 }
                 for (let abilityTemplateKey in actorAbilitys) {
-                    let attribute = actorAbilitys[abilityTemplateKey]?.attribute;
-                    if (attribute != null) {
-                        attributeArray.push(attribute)
-                    }
+                    attributeArray = ActorUtil.collectActorAllAttributes(attributeArray, actorAbilitys[abilityTemplateKey])
                 }
             }
             //演员buff
             let _SL_solarActorBuffSet: ActorBuff[] = solarData._SL_solarActorBuffs;
             if (_SL_solarActorBuffSet) {
                 for (let actorBuff of _SL_solarActorBuffSet) {
-                    let resultAttribute = actorBuff.attribute
-                    if (resultAttribute != null) {
-                        if (attributeArray == null) {
-                            attributeArray = [];
-                        }
-                        if (SolarActorAttributeState.buffAttributeHandlers.length > 0) {
-                            resultAttribute = {...actorBuff.attribute}
-                            for (let buffAttributeHandler of SolarActorAttributeState.buffAttributeHandlers) {
-                                resultAttribute = buffAttributeHandler(actorBuff, resultAttribute)
-                            }
-                        }
-                        attributeArray.push(resultAttribute)
-                    }
+                    attributeArray = ActorUtil.collectActorAllAttributes(attributeArray, actorBuff, SolarActorAttributeState.buffAttributeHandlers)
                 }
             }
         }
@@ -164,14 +153,7 @@ export default class SolarActorAttributeState {
                         if (attributeArray == null) {
                             attributeArray = [];
                         }
-                        let resultAttribute = actorItem.attribute;
-                        if (SolarActorAttributeState.itemAttributeHandlers.length > 0) {
-                            resultAttribute = {...actorItem.attribute}
-                            for (let itemAttributeHandler of SolarActorAttributeState.itemAttributeHandlers) {
-                                resultAttribute = itemAttributeHandler(actorItem, resultAttribute)
-                            }
-                        }
-                        attributeArray.push(resultAttribute);
+                        attributeArray = ActorUtil.collectActorAllAttributes(attributeArray, actorItem, SolarActorAttributeState.itemAttributeHandlers)
                     }
                 }
             }

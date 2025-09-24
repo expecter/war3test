@@ -7,9 +7,9 @@ export default class NumberUtil {
      * @param n
      * @param base
      */
-    //!"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~
-        //将可能影响json格式的放到后面
-    static digits = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!#$%&()*+-./;<=>?@\\^_`~|,\"':{}[]";
+        //!"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~
+        //将可能影响json格式的放到后面 推荐86进制 74进制可以使用5位字母表达无符号整数
+    static digits = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!#$%&()*+-./;<=>?@_~|^,`\"'\\:{}[]";
 
     static toUnsignedString(n: number, radix: number = 62): string {
         if (radix < 2 || radix > 94) {

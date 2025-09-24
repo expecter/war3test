@@ -1,4 +1,5 @@
-import 闪现 from "xlsx/技能/闪现";
+import 基础单位演员 from "xlsx/单位/基础单位演员";
+import 技能演员 from "xlsx/单位/技能演员";
 import 技能书学习到QWER栏位 from "xlsx/系统/技能书学习到QWER栏位";
 import 进攻怪演员 from "xlsx/敌人怪物/进攻怪演员";
 import 开局选择英雄角色 from "xlsx/系统/开局选择英雄角色";
@@ -14,5 +15,6 @@ export default function StateConfigInit() {
     开局选择英雄角色();
     进攻怪演员();
     技能书学习到QWER栏位();
-    闪现();
+    技能演员();
+    基础单位演员();
 }

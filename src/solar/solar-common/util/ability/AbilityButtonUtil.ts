@@ -184,7 +184,9 @@ export default class AbilityButtonUtil {
     /**
      * addons
      */
-    static hotKeys = ["Z", "X", "C", "V", "A", "S", "D", "F", "Q", "W", "E", "R"]
+    static hotKeys = ["Z", "X", "C", "V",
+        "T", "G", "D", "F",
+        "Q", "W", "E", "R"]
 
     /**
      * 根据1-12的技能位置编号  返回对应位置的快捷键

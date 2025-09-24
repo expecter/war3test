@@ -5,6 +5,21 @@ import DataBase from "@/DataBase";
  * 演员通常最终作用于单位身上。（事实上所有游戏 所有数据 所有逻辑 最终的表现几乎都是在单位身上）
  * 优先使用此演员工具 不要把演员局限到技能或物品上 这样会导致演员不够统一 也不利于转换结构 比如吞噬这些 要保证无论是演员技能还是演员物品 都应该是一样的 所以优先考虑把逻辑代码写到演员基类里
  */
+declare global {
+
+    /**
+     * 演员物品属性处理器 (可以在这里做装备加成等增幅)
+     *
+     * resultAttribute 返回的最终给单位加上的属性 可以与ActorItem.attribute 不一样 以免改到基础属性
+     * resultAttribute 初始为复制的ActorItem.attribute
+     * 处理器通常应直接return resultAttribute
+     */
+    type ActorAttributeHandler = (actor: Actor, resultAttribute: AppAttribute) => AppAttribute
+
+
+}
+
+
 export default class ActorUtil {
 
 
@@ -165,58 +180,63 @@ export default class ActorUtil {
     /**
      * 获取单位身上所有演员 的属性值
      * @param unit
+     * @param attributeHandlers
      */
-    static getUnitAllActorAttributes(unit: unit): AppAttribute[] {
+    static getUnitAllActorAttributes(unit: unit, attributeHandlers?: ActorAttributeHandler[]): AppAttribute[] {
         let attributeArray: AppAttribute[] = null;
-        let solarData = DataBase.getUnitSolarData(unit, false);
-        if (solarData != null) {
-            //单位
-            let attribute: AppAttribute = solarData._SL_solarActorUnit?.attribute;
-            if (attribute != null) {
-                attributeArray = [attribute];
-            }
-            //技能
-            let actorAbilitys = solarData._SL_solarActorAbilitys;
-            if (actorAbilitys != null) {
-                if (attributeArray == null) {
-                    attributeArray = [];
-                }
-                for (let abilityTemplateKey in actorAbilitys) {
-                    let attribute = actorAbilitys[abilityTemplateKey];
-                    if (attribute != null) {
-                        attributeArray.push(attribute)
-                    }
-                }
-            }
-            //演员buff
-            let _SL_solarActorBuffSet: Actor[] = solarData._SL_solarActorBuffs;
-            if (_SL_solarActorBuffSet) {
-                for (let actorBuff of _SL_solarActorBuffSet) {
-                    let attribute = actorBuff.attribute
-                    if (attribute != null) {
-                        if (attributeArray == null) {
-                            attributeArray = [];
-                        }
-                        attributeArray.push(attribute)
-                    }
-                }
-            }
-        }
-        let invSize = UnitInventorySize(unit)
-        for (let i = 0; i < invSize; i++) {
-            let item = UnitItemInSlot(unit, i);
-            if (IsHandle(item)) {
-                let attribute = DataBase.getItemSolarData(item, false)?._SL_solarActorItem?.attribute;
-                if (attribute != null) {
-                    if (attributeArray == null) {
-                        attributeArray = [];
-                    }
-                    attributeArray.push(attribute)
-                }
+        let actorList = ActorUtil.getUnitAllActorList(unit);
+        if (actorList && actorList.length > 0) {
+            for (let actor of actorList) {
+                attributeArray = ActorUtil.collectActorAllAttributes(attributeArray, actor, attributeHandlers);
             }
         }
         return attributeArray;
     }
+
+    /**
+     *
+     * @param resultAttributeArray
+     * @param actor
+     * @param attributeHandlers 属性处理 装备增幅可以用这个来提升属性倍率
+     */
+    static collectActorAllAttributes(resultAttributeArray: AppAttribute[], actor: Actor, attributeHandlers?: ActorAttributeHandler[]): AppAttribute[] {
+        if (actor == null) {
+            return resultAttributeArray;
+        }
+        let resultAttribute = actor.attribute;
+        if (resultAttribute) {
+            if (resultAttributeArray == null) {
+                resultAttributeArray = []
+            }
+            if (attributeHandlers && attributeHandlers.length > 0) {
+                resultAttribute = {...actor.attribute}
+                for (let attributeHandler of attributeHandlers) {
+                    resultAttribute = attributeHandler(actor, resultAttribute)
+                }
+            }
+            resultAttributeArray.push(resultAttribute)
+        }
+        let _sl_extAttributes = actor._sl_extAttributes;
+        if (_sl_extAttributes) {
+            if (resultAttributeArray == null) {
+                resultAttributeArray = []
+            }
+            for (let extName in _sl_extAttributes) {
+                let resultAttribute = _sl_extAttributes[extName];
+                if (resultAttribute) {
+                    if (attributeHandlers && attributeHandlers.length > 0) {
+                        resultAttribute = {...actor.attribute}
+                        for (let attributeHandler of attributeHandlers) {
+                            resultAttribute = attributeHandler(actor, resultAttribute)
+                        }
+                    }
+                    resultAttributeArray.push(resultAttribute)
+                }
+            }
+        }
+        return resultAttributeArray;
+    }
+
 
     /**
      * 如果单位是否持有某个类型的演员

@@ -921,6 +921,18 @@ declare function DzFrameSetAnimateOffset(frame: number, offset: number): void;
 
 /**
  * 设置texture（支持Backdrop、SimpleStatusBar）
+ * 如果是tga的图片路径 则中文路径受到限制 不能以中文名结尾.tga 文件名中文紧挨数值时中文不得超过2个
+ *
+ * 错误的路径
+ * 美化\美化的漂浮数字\亮绿色\亮.tga 会报底层调用异常
+ * 美化\美化的漂浮数字\亮绿色\亮绿色1solar.tga 会报底层调用异常
+ *
+ * 正确的路径
+ * 美化\美化的漂浮数字\亮绿色\亮绿1solar.tga
+ *
+ * 美化\美化的漂浮数字\白色\白色恒啊_1solar.tga //ok
+ *
+ *
  */
 declare function DzFrameSetTexture(frame: number, texture: string, flag: number): void;
 

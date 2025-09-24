@@ -44,6 +44,9 @@ export default class KKImplementEmbedJapi {
         if (EXSetItemColor == null) {
             _G.EXSetItemColor = DzItemSetVertexColor;
         }
+        if (EXSetEffectColor == null) {
+            _G.EXSetEffectColor = DzSetEffectVertexColor;
+        }
     }
 
 

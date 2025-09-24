@@ -119,6 +119,40 @@ export default class TextUtil {
 
 
     /**
+     * 秒转时分秒显示的提升信息
+     * @param seconds
+     */
+    static secondsToHMS(seconds: number): string {
+        if (seconds < 60) {
+            return seconds + "秒";
+        }
+        if (seconds < 3600) {
+            const minutes = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            if (secs == 0) {
+                return minutes + "分";
+            } else {
+                return minutes + "分" + secs + "秒";
+            }
+        }
+
+        const hours = Math.floor(seconds / 3600);
+        const minutes = Math.floor((seconds % 3600) / 60);
+        const secs = seconds % 60;
+
+        if (secs == 0) {
+            if (minutes == 0) {
+                return hours + "小时"
+            } else {
+                return hours + "小时" + minutes + "分";
+            }
+        } else {
+            return hours + "小时" + minutes + "分" + secs + "秒";
+        }
+    }
+
+
+    /**
      * 移除一个文本的 |cxxx颜色
      * @param value
      */

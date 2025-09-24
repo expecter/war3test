@@ -277,6 +277,8 @@ declare interface SolarAttribute extends BaseAttribute {
 
 }
 
+declare type AppAttributeKey = keyof AppAttribute;
+
 /**
  * 太阳伤害事件
  */

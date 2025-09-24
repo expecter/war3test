@@ -58,10 +58,7 @@ export default class 选择英雄{
         let loc = GetPlayerStartLocationLoc(player)
         let unit = CreateUnit(player, key, GetLocationX(loc), GetLocationY(loc), 0);
         se.emit("选择英雄", unit)
-        print("1111111111111")
         sd(player).hero = unit;
-        let res = UnitAddAbility(unit,"Aroa")
-        print("learn ability res",res)
-        // ActorAbilityUtil.createActorAbility("",unit)
+        // let res = UnitAddAbility(unit,key)
     }
 }

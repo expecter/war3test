@@ -62,9 +62,9 @@ export default class ItemAttributeState {
      * 统计单位携带的物品的 总属性值
      * @param unitHandle
      */
-    static getItemsAttributes(unitHandle: unit): SolarAttribute[] {
+    static getItemsAttributes(unitHandle: unit): AppAttribute[] {
         //统计装备总计数值
-        let itemAttributes: SolarAttribute[] = null;
+        let itemAttributes: AppAttribute[] = null;
         for (let i = 0; i < 6; i++) {
             let itemHandle = UnitItemInSlot(unitHandle, i);
             if (!IsHandle(itemHandle)) {
@@ -76,7 +76,7 @@ export default class ItemAttributeState {
             let itemTypeId = GetItemTypeId(itemHandle)
             let itemTypeIdStr = id2string(itemTypeId);
             //solarData 数据
-            let itemAttribute: SolarAttribute = AttributeUtil.getItemAttribute(itemHandle);
+            let itemAttribute: AppAttribute = AttributeUtil.getItemAttribute(itemHandle);
             if (itemAttribute) {
                 itemAttributes.push(itemAttribute)
             }

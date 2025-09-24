@@ -1,3 +1,4 @@
+PACKAGE = package
 -- 此lua脚本为太阳引导程序 即第一个被执行的lua
 package.path = "scripts\\?.lua;lua\\?.lua;" .. package.path
 -- 环境初始化

@@ -14,7 +14,7 @@ import TextUtil from "@/TextUtil";
 export default class AttributeUtil {
 
     /**
-     * index 可作为排序使用
+     * index 可作为排序使用 最好不要重复
      */
     static keyInfos: { [k: string]: { name: string, index?: number, isPercentage?: boolean } } = {
         attack: {name: "攻击", index: 1, isPercentage: false},
@@ -57,6 +57,8 @@ export default class AttributeUtil {
         blood_sucking: {name: "|cffff0000伤害吸血|r", index: 36, isPercentage: true},
         split_damage_range: {name: "分裂范围", index: 37, isPercentage: false},
         split_damage: {name: "分裂伤害", index: 38, isPercentage: true},
+        primary_property: {name: "主属性", index: 39, isPercentage: false},
+        primary_property_p: {name: "主属性百分比", index: 40, isPercentage: true}
     }
 
     /**
@@ -82,15 +84,18 @@ export default class AttributeUtil {
         //取值
         for (let key of keys) {
             let name = key;
-            let val = attribute[key] as any;
+            let val = attribute[key] as number;
+            let valStr: any = val;
             let keyInfo = AttributeUtil.keyInfos[key];
             if (keyInfo) {
                 name = keyInfo.name;
                 if (keyInfo.isPercentage) {
-                    val = TextUtil.toPercentage(val);
+                    valStr = TextUtil.toPercentage(val);
+                } else if (val > 10000) {
+                    valStr = TextUtil.toCnUnit(val);
                 }
             }
-            info += name + " + " + val + "|n";
+            info += name + " + " + valStr + "|n";
         }
         return info;
     }

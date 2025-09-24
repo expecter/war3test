@@ -77,12 +77,31 @@ export default class RandomUtil {
     static getRandomKeysByWeight(needkeyCount: number, ...objAndWeights: {
         [key: string | number | symbol]: number
     }[]): any[] {
-        let result = []
-        for (let i = 0; i < 1000000; i++) {
-            let one = RandomUtil.getRandomKeyByWeight(...objAndWeights)
-            if (!result.includes(one)) {
-                result.push(one)
+        let result = [];
+        let poolKeyCount = 0;
+        //正常计算
+        let allObjAndWeights = {};
+        for (let i = 0; i < objAndWeights.length; i++) {
+            let objAndWeight = objAndWeights[i];
+            for (let objAndWeightKey in objAndWeight) {
+                allObjAndWeights[objAndWeightKey] = objAndWeight[objAndWeightKey];
+                poolKeyCount++;
             }
+        }
+        //
+        if (poolKeyCount <= needkeyCount) {
+            return Object.keys(allObjAndWeights);
+        }
+
+        for (let i = 0; i < 1000000; i++) {
+            let one = RandomUtil.getRandomKeyByWeight(allObjAndWeights);
+            if (one == null) {
+                break;
+            }
+            if (!result.includes(one)) {
+                result.push(one);
+            }
+            allObjAndWeights[one] = null;
             if (result.length >= needkeyCount) {
                 break;
             }

@@ -104,6 +104,7 @@ export default class GlobalVars {
         isDebug = (storm.load(tostring(local_map_dir_path) + "/src/App.ts") != null) && (storm.load("war3mapunits.doo") != null)
         if (isDebug) {
             runtime.console = true; //如果App start不执行 可以在此启用控制台 以debug 此类的代码是否正常执行
+            PACKAGE.path = tostring(local_map_dir_path || "") + 'scripts\\?.lua;' + PACKAGE.path;
         }
         GlobalVars.initBaseLuaEnv();
         //初始化所有jass.xxx的值 到_G全局变量上

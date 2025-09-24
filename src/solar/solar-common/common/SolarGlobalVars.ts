@@ -63,7 +63,7 @@ export default class SolarGlobalVars {
      */
     private static initBaseVars(): void {
         gameName = "太阳TS地图";
-        _sl_version = 6.41;
+        _sl_version = 6.43;
         isBigAttributeMode = false;
         handleReuseMinTime = 2.99;
         isAsync = false;

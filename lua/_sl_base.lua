@@ -1,4 +1,3 @@
-PACKAGE = package
 --- 获取一个table的正确长度
 ---@protected
 ---@param table table

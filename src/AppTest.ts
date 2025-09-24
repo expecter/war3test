@@ -35,10 +35,6 @@ export default class AppTest {
             se.playerChat("cs", () => {
                 DebugCheckSyncUtil.start()
             })
-            se.playerChat("auto", () => {
-                isAuto = true
-                print("自动打怪升级")
-            })
             se.playerChat("t11", () => {
                 YiYiApiJassImpl.init()
                 FrameCallbackUtil.addFrameSetUpdateCallback(() => {

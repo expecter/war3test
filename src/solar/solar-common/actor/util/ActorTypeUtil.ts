@@ -15,23 +15,6 @@ export default class ActorTypeUtil {
      */
     private static _sl_onRegisterActorTypeListeners: ((actorType: AppActorType) => void)[] = [];
 
-    /**
-     * 添加任意演员类型注册事件 监听回调
-     *
-     * @param registerActorTypeListener 回调
-     * @param actorTypeID 指定只监听某一个演员类型
-     */
-    static addRegisterActorTypeListener(registerActorTypeListener: (actorType: AppActorType) => void, actorTypeID?: string) {
-        if (actorTypeID) {
-            ActorTypeUtil._sl_onRegisterActorTypeListeners.push(actorType => {
-                if (actorTypeID == actorType.id) {
-                    registerActorTypeListener(actorType);
-                }
-            });
-        } else {
-            ActorTypeUtil._sl_onRegisterActorTypeListeners.push(registerActorTypeListener);
-        }
-    }
 
     /**
      * 注册演员类型
@@ -69,7 +52,6 @@ export default class ActorTypeUtil {
      * @param actorTypeId 类型id
      */
     static hasActorType(actorTypeId: string): boolean {
-        //这里保存一下保证读取时快速根据ID读取
         if (actorTypeId == null || actorTypeId.length == 0) {
             return false;
         }
@@ -89,7 +71,11 @@ export default class ActorTypeUtil {
             log.errorWithTraceBack("actorTypeId不能为null!")
             return null;
         }
-        return DataBase.getSolarActorType(actorTypeId);
+        let actorType = DataBase.getSolarActorType(actorTypeId);
+        if (actorType == null) {
+            print("没有此类型演员:" + actorTypeId)
+        }
+        return actorType;
     }
 
 
@@ -102,7 +88,7 @@ export default class ActorTypeUtil {
 
 
     /**
-     * 遍历所有Actor类型
+     * 遍历当前已注册所有Actor类型
      * @param callback 遍历回调函数
      * @param actorTypeClass ActorType的类别 Class
      */
@@ -124,6 +110,34 @@ export default class ActorTypeUtil {
 
         }
 
+    }
+
+    /**
+     * 遍历当前已注册所有Actor类型  和之后注册的新演员类型
+     *
+     * @param actorTypeListener
+     */
+    static forAllActorTypesAndLaterRegister(actorTypeListener: (actorType: AppActorType) => void) {
+        ActorTypeUtil.forAllActorTypes(actorTypeListener);
+        ActorTypeUtil.addRegisterActorTypeListener(actorTypeListener);
+    }
+
+    /**
+     * 添加任意演员类型注册事件 监听回调
+     *
+     * @param registerActorTypeListener 回调
+     * @param actorTypeID 指定只监听某一个演员类型
+     */
+    static addRegisterActorTypeListener(registerActorTypeListener: (actorType: AppActorType) => void, actorTypeID?: string) {
+        if (actorTypeID) {
+            ActorTypeUtil._sl_onRegisterActorTypeListeners.push(actorType => {
+                if (actorTypeID == actorType.id) {
+                    registerActorTypeListener(actorType);
+                }
+            });
+        } else {
+            ActorTypeUtil._sl_onRegisterActorTypeListeners.push(registerActorTypeListener);
+        }
     }
 
 
