@@ -3,10 +3,10 @@ import UnitEvent from "@/event/UnitEvent";
 import Random from "@/Random";
 import RandomUtil from "@/RandomUtil";
 import ActorAbilityUtil from "@/util/ActorAbilityUtil";
-import blink from "./skill/blink";
+import blink from "./blink";
 import { d_技能演员 } from "xlsx/单位/技能演员";
 
-export default class 选择技能{
+export default class SystemSkill{
     /**
      * 单位和已经学习的技能列表
      */
@@ -32,7 +32,6 @@ export default class 选择技能{
             let unit = unitEvent.trigUnit
             let playerId = GetPlayerId(GetOwningPlayer(unit))
             DialogUtil.show(playerId, "选择技能", (i, text) => {
-                // UnitAddAbility(unit,"ab01")
                 this.LearnSkill(unit,buttonTexts[i])
             }, ...buttonTexts)
         }
@@ -52,7 +51,7 @@ export default class 选择技能{
             //添加规则
             tlSkill.push(item.id)
         })
-
+        print(tlSkill.length,"可学习的技能列表")
         let tl = RandomUtil.getRandomElementByObjArrays(4,"key",tlSkill)
         return tl
     }

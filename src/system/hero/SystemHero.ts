@@ -5,7 +5,7 @@ import PlayerUtil from "@/PlayerUtil";
 import RandomUtil from "@/RandomUtil";
 import ActorAbilityUtil from "@/util/ActorAbilityUtil";
 
-export default class 选择英雄{
+export default class SystemHero{
     
     static cfg: {
         unitIdWeights: { [单位id: string]: number }
@@ -20,10 +20,10 @@ export default class 选择英雄{
     }
 
     constructor(){
-        BaseUtil.runLater(选择英雄.cfg.timeOut, () => {
+        BaseUtil.runLater(SystemHero.cfg.timeOut, () => {
             PlayerUtil.forPlayingPlayers(player => {
                 if(GetPlayerController(player) == MAP_CONTROL_USER){
-                    选择英雄.showDialog(player)
+                    SystemHero.showDialog(player)
                 }
             });
         })
@@ -32,23 +32,23 @@ export default class 选择英雄{
     static showDialog(player: player) {
         let buttonTexts = []
 
-        let unitIds = RandomUtil.getRandomKeysByWeight(选择英雄.cfg.optionSize, 选择英雄.cfg.unitIdWeights);
+        let unitIds = RandomUtil.getRandomKeysByWeight(SystemHero.cfg.optionSize, SystemHero.cfg.unitIdWeights);
         for (let i = 0; i < unitIds.length; i++) {
             buttonTexts.push(ObjectDataUtil.getUnitName(unitIds[i]))
         }
         let d = sd(player);
         d.开局选择英雄角色随机次数 = (d.开局选择英雄角色随机次数 || 0) + 1;
-        if (d.开局选择英雄角色随机次数 <= 选择英雄.cfg.freeRefreshCount) {
+        if (d.开局选择英雄角色随机次数 <= SystemHero.cfg.freeRefreshCount) {
             buttonTexts.push("【|cff00ff00重随|r】")
         }
         if(isAuto){
-            选择英雄.SelectHero(player,unitIds[0])
+            SystemHero.SelectHero(player,unitIds[0])
         }else{
             DialogUtil.show(GetPlayerId(player), "选择角色", (i, text) => {
                 if (i == unitIds.length) {
-                    选择英雄.showDialog(player);
+                    SystemHero.showDialog(player);
                 } else {
-                    选择英雄.SelectHero(player,unitIds[i])
+                    SystemHero.SelectHero(player,unitIds[i])
                 }
             }, ...buttonTexts)
         }

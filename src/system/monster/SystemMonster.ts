@@ -5,7 +5,7 @@ import ActorUnitUtil from "@/util/ActorUnitUtil";
 import { l_进攻怪路线 } from "_sl_editor/l_进攻怪路线";
 import 进攻怪演员, { d_进攻怪演员 } from "xlsx/敌人怪物/进攻怪演员";
 
- export default class 怪物进攻{
+ export default class SystemMonster{
     private pauseTime = 0
     private attackTime = 0
     private wave = 0

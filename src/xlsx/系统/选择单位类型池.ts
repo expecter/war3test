@@ -17,7 +17,39 @@ declare global {
 
 export const data: data_type[] = [
 	{
-		"id":"Hvsh",
+		"id":"Emns",
+		"weight":1
+	},
+	{
+		"id":"Emoo",
+		"weight":1
+	},
+	{
+		"id":"Ewar",
+		"weight":1
+	},
+	{
+		"id":"Ewrd",
+		"weight":1
+	},
+	{
+		"id":"H004",
+		"weight":1
+	},
+	{
+		"id":"H006",
+		"weight":1
+	},
+	{
+		"id":"H011",
+		"weight":1
+	},
+	{
+		"id":"H017",
+		"weight":1
+	},
+	{
+		"id":"Hmkg",
 		"weight":1
 	},
 	{
@@ -25,33 +57,9 @@ export const data: data_type[] = [
 		"weight":1
 	},
 	{
-		"id":"Hvsh",
+		"id":"N02P",
 		"weight":1
-	},
-	{
-		"id":"Hvsh",
-		"weight":1
-	},
-	{
-		"id":"Hvsh",
-		"weight":1
-	},
-	{
-		"id":"Hvsh",
-		"weight":1
-	},
-	{
-		"id":"Hvsh",
-		"weight":1
-	},
-	{
-		"id":"Hvsh",
-		"weight":1
-	},
-	{
-		"id":"Hvsh",
-		"weight":1
-	},
+	}
 ]
 export const d_选择单位类型池 = data;
 

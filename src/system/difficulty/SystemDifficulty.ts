@@ -1,6 +1,6 @@
 import DialogUtil from "@/DialogUtil";
 
-export default class 选择难度{
+export default class SystemDifficulty{
     constructor(){
         if(isAuto){
             se.emit("选择难度",0)
