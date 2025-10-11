@@ -43,16 +43,17 @@ declare global {
 
 export const data: data_type[] = [
 	{
-		"id":"一线光阴",
+		"id":"沟壑",
 		"class":"技能",
-		"targetType":"无目标",
+		"targetType":"点",
 		"passive":false,
-		"name":"一线光阴",
+		"name":"沟壑",
 		"describe":"释放技能后，以自身为中心的1200范围内创建时间结界，在区域内的敌对单位，暂停攻击和移动2秒，并每0.2受到智力*0.1的魔法伤害",
 		"icon":"ReplaceableTextures\\CommandButtons\\BTNManaShield.blp",
 		"range":1000,
 		"area":200,
 		"manaCost":50,
+		"hotKey":"F",
 		"maxCd":15,
 		"x":0,
 		"y":2

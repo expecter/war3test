@@ -32,7 +32,7 @@ declare global {
 export const data: data_type[] = [
 	{
 		"id":"dwzdcjxt001",
-		"unitId":"hfoo",
+		"unitId":"H004",
 		"owner":11,
 		"loc":{
 			"x":100,
@@ -43,15 +43,16 @@ export const data: data_type[] = [
 		"area":200
 	},
 	{
-		"id":"au01",
+		"id":"dwzdcjxt002",
 		"unitId":"au01",
 		"owner":11,
 		"loc":{
 			"x":100,
-			"y":20
+			"y":1
 		},
 		"creationTime":0.01,
-		"count":1
+		"count":1,
+		"area":100
 	}
 ]
 export const d_单位自动创建系统 = data;

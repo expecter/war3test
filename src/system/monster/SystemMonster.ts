@@ -44,7 +44,8 @@ import 进攻怪演员, { d_进攻怪演员 } from "xlsx/敌人怪物/进攻怪�
         ActorUnitUtil.createActorUnit(Player(11),element.id,l_进攻怪路线[0].x,l_进攻怪路线[0].y,0,10,(actionUnit)=>{
             UnitStateUtil.orderAttackTarget(actionUnit.unit,sd(Player(0)).hero)
         })
-
+        // let unit = CreateUnit(Player(11),"H004",l_进攻怪路线[0].x,l_进攻怪路线[0].y,0)
+        // UnitStateUtil.orderAttackTarget(unit,sd(Player(0)).hero)
     }
 
     public GetWave(){

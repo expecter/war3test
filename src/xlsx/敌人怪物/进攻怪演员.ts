@@ -65,7 +65,7 @@ export const data: data_type[] = [
 	{
 		"id":"进攻怪Lv1",
 		"class":"进攻怪",
-		"templateType":"hfoo",
+		"templateType":"近战单位",
 		"name":"感染者",
 		"icon":"ReplaceableTextures\\CommandButtons\\BTNCorruptedEnt.blp",
 		"model":"units\\creeps\\Zombie\\Zombie.mdx",
@@ -87,7 +87,7 @@ export const data: data_type[] = [
 	{
 		"id":"进攻怪Lv2",
 		"class":"进攻怪",
-		"templateType":"hfoo",
+		"templateType":"近战单位",
 		"name":"食尸鬼",
 		"icon":"ReplaceableTextures\\CommandButtons\\BTNCorruptedEnt.blp",
 		"model":"units\\undead\\Ghoul\\Ghoul.mdx",
@@ -109,7 +109,7 @@ export const data: data_type[] = [
 	{
 		"id":"进攻怪Lv3",
 		"class":"进攻怪",
-		"templateType":"hfoo",
+		"templateType":"近战单位",
 		"name":"憎恶",
 		"icon":"ReplaceableTextures\\CommandButtons\\BTNCorruptedEnt.blp",
 		"model":"units\\undead\\Abomination\\Abomination.mdx",
@@ -131,7 +131,7 @@ export const data: data_type[] = [
 	{
 		"id":"进攻怪Lv4",
 		"class":"进攻怪",
-		"templateType":"hfoo",
+		"templateType":"近战单位",
 		"name":"变异寄生虫",
 		"icon":"ReplaceableTextures\\CommandButtons\\BTNCorruptedEnt.blp",
 		"model":"units\\critters\\DuneWorm\\DuneWorm.mdx",
@@ -154,7 +154,7 @@ export const data: data_type[] = [
 	{
 		"id":"进攻怪Lv5",
 		"class":"进攻怪",
-		"templateType":"hfoo",
+		"templateType":"近战单位",
 		"name":"追踪者",
 		"icon":"ReplaceableTextures\\CommandButtons\\BTNCorruptedEnt.blp",
 		"model":"units\\creeps\\SludgeMonster\\SludgeMonster.mdx",
@@ -176,7 +176,7 @@ export const data: data_type[] = [
 	{
 		"id":"进攻怪Lv6",
 		"class":"进攻怪",
-		"templateType":"hfoo",
+		"templateType":"近战单位",
 		"name":"舔食者",
 		"icon":"ReplaceableTextures\\CommandButtons\\BTNCorruptedEnt.blp",
 		"model":"Units\\Creeps\\Hydra\\Hydra.mdx",
@@ -198,7 +198,7 @@ export const data: data_type[] = [
 	{
 		"id":"进攻怪Lv7",
 		"class":"进攻怪",
-		"templateType":"hfoo",
+		"templateType":"近战单位",
 		"name":"猎杀者",
 		"icon":"ReplaceableTextures\\CommandButtons\\BTNCorruptedEnt.blp",
 		"model":"units\\creeps\\FurbolgElder\\FurbolgElder.mdx",
@@ -220,7 +220,7 @@ export const data: data_type[] = [
 	{
 		"id":"进攻怪Lv8",
 		"class":"进攻怪",
-		"templateType":"hfoo",
+		"templateType":"近战单位",
 		"name":"变异虫后",
 		"icon":"ReplaceableTextures\\CommandButtons\\BTNCorruptedEnt.blp",
 		"model":"units\\undead\\CryptFiend\\CryptFiend.mdx",
@@ -242,7 +242,7 @@ export const data: data_type[] = [
 	{
 		"id":"进攻怪Lv9",
 		"class":"进攻怪",
-		"templateType":"hfoo",
+		"templateType":"近战单位",
 		"name":"生化母体",
 		"icon":"ReplaceableTextures\\CommandButtons\\BTNCorruptedEnt.blp",
 		"model":"units\\demon\\DemonessBlue\\DemonessBlue.mdx",
@@ -264,7 +264,7 @@ export const data: data_type[] = [
 	{
 		"id":"进攻怪Lv10",
 		"class":"进攻怪",
-		"templateType":"hfoo",
+		"templateType":"近战单位",
 		"name":"基美拉",
 		"icon":"ReplaceableTextures\\CommandButtons\\BTNCorruptedEnt.blp",
 		"model":"units\\undead\\Gargoyle\\Gargoyle.mdx",
@@ -287,7 +287,7 @@ export const data: data_type[] = [
 	{
 		"id":"进攻怪Lv11",
 		"class":"进攻怪",
-		"templateType":"hfoo",
+		"templateType":"近战单位",
 		"name":"谵死怪",
 		"icon":"ReplaceableTextures\\CommandButtons\\BTNCorruptedEnt.blp",
 		"model":"units\\creeps\\CorruptedEnt\\CorruptedEnt.mdx",
@@ -309,7 +309,7 @@ export const data: data_type[] = [
 	{
 		"id":"进攻怪Lv12",
 		"class":"进攻怪",
-		"templateType":"hfoo",
+		"templateType":"近战单位",
 		"name":"G变异",
 		"icon":"ReplaceableTextures\\CommandButtons\\BTNCorruptedEnt.blp",
 		"model":"Units\\Creeps\\FacelessOne\\FacelessOne.mdx",
@@ -331,7 +331,7 @@ export const data: data_type[] = [
 	{
 		"id":"进攻怪Lv13",
 		"class":"进攻怪",
-		"templateType":"hfoo",
+		"templateType":"近战单位",
 		"name":"暴君",
 		"icon":"ReplaceableTextures\\CommandButtons\\BTNCorruptedEnt.blp",
 		"model":"units\\undead\\HeroDreadLord\\HeroDreadLord.mdx",
@@ -353,7 +353,7 @@ export const data: data_type[] = [
 	{
 		"id":"进攻怪Lv14",
 		"class":"进攻怪",
-		"templateType":"hfoo",
+		"templateType":"近战单位",
 		"name":"大屠夫",
 		"icon":"ReplaceableTextures\\CommandButtons\\BTNCorruptedEnt.blp",
 		"model":"units\\demon\\Mannoroth\\Mannoroth.mdx",
@@ -375,7 +375,7 @@ export const data: data_type[] = [
 	{
 		"id":"进攻怪Lv15",
 		"class":"进攻怪",
-		"templateType":"hfoo",
+		"templateType":"近战单位",
 		"name":"血腥存在",
 		"icon":"ReplaceableTextures\\CommandButtons\\BTNCorruptedEnt.blp",
 		"model":"units\\demon\\DoomGuard\\DoomGuard.mdx",

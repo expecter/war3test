@@ -3,8 +3,9 @@ import UnitEvent from "@/event/UnitEvent";
 import Random from "@/Random";
 import RandomUtil from "@/RandomUtil";
 import ActorAbilityUtil from "@/util/ActorAbilityUtil";
-import blink from "./blink";
+import 闪现 from "./闪现";
 import { d_技能演员 } from "xlsx/单位/技能演员";
+import 沟壑 from "./沟壑";
 
 export default class SystemSkill{
     /**
@@ -14,18 +15,21 @@ export default class SystemSkill{
     constructor(){
         //点击加点按钮，弹出技能选择列表，列表项根据当前角色的技能进行0筛选
         se.onHeroLevelUp((unitEvent)=>{
-           
             this.SkillPanel( unitEvent)
         })
-        new blink()
+        this.InitSkills()
     }
+    InitSkills(){
+        new 闪现()
+        new 沟壑()
+    }
+
     /**
      * 技能选择面板
      */
     SkillPanel(unitEvent:UnitEvent){
         // UnitAddAbility(unitEvent.trigUnit,"ab01")
-        let buttonTexts = ["闪现"]
-        let skillId = 0
+        let buttonTexts = this.CanLearnSkillList(unitEvent.trigUnit)
         if(isAuto){
 
         }else{

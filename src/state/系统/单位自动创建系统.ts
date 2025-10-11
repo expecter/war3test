@@ -10,6 +10,7 @@ import ActorItem from "@/ActorItem";
 import TextUtil from "@/TextUtil";
 import ActorTypeUtil from "@/ActorTypeUtil";
 import ObjectDataUtil from "@/ObjectDataUtil";
+import UnitStateUtil from "@/UnitStateUtil";
 
 type cfg_type = {
     id?: string
@@ -20,7 +21,8 @@ type cfg_type = {
     creationTime?: number
     count?: number
     area?: number
-    reviveTime?: any
+    reviveTime?: number
+    unitFace?: number
 }
 export default class 单位自动创建系统 {
     static config: cfg_type[] = []
@@ -95,18 +97,22 @@ export default class 单位自动创建系统 {
                 y += RandomUtil.nextInt(-cfg.area, cfg.area);
             }
             if (cfg.unitId) {
-                let face = 270;
+                let face = cfg.unitFace || 270;
                 if (i > 0) {
                     face = RandomUtil.nextInt(0, 360)
                 }
                 let unit = ActorUnitUtil.createUnit(player, cfg.unitId, x, y, face);
+                if (cfg.unitFace && i == 0) {
+                    //0移速的npc 要使用这个才能设置面向角度
+                    UnitStateUtil.setUnitFacing(unit, cfg.unitFace)
+                }
                 //有复活
                 if (cfg.reviveTime) {
                     let actorUnit = ActorUnitUtil.getActorUnit(unit);
                     if (actorUnit == null) {
                         print("非演员单位不支持使用此系统复活参数！")
                     }
-                    单位自动创建系统.setOnUnitDeath(actorUnit, cfg.reviveTime, player, cfg.unitId, x, y)
+                    单位自动创建系统.setOnUnitDeath(actorUnit, cfg.reviveTime, player, cfg.unitId, x, y, face)
 
                 }
             }
@@ -128,11 +134,11 @@ export default class 单位自动创建系统 {
     }
 
 
-    static setOnUnitDeath(actorUnit: ActorUnit, reviveTime: number, player: player, unitId: string, x: number, y: number) {
+    static setOnUnitDeath(actorUnit: ActorUnit, reviveTime: number, player: player, unitId: string, x: number, y: number, face: number) {
         actorUnit.set("onUnitDeath", (actor, killingUnit) => {
             BaseUtil.runLater(reviveTime, () => {
-                let temp = ActorUnitUtil.createActorUnit(player, unitId, x, y);
-                单位自动创建系统.setOnUnitDeath(temp, reviveTime, player, unitId, x, y)
+                let temp = ActorUnitUtil.createActorUnit(player, unitId, x, y, face);
+                单位自动创建系统.setOnUnitDeath(temp, reviveTime, player, unitId, x, y, face)
             });
         })
     }
