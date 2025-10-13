@@ -5,7 +5,7 @@ import RandomUtil from "@/RandomUtil";
 import ActorAbilityUtil from "@/util/ActorAbilityUtil";
 import 闪现 from "./闪现";
 import { d_技能演员 } from "xlsx/单位/技能演员";
-import 沟壑 from "./沟壑";
+import { d_技能, data_type } from "xlsx/技能/技能";
 
 export default class SystemSkill{
     /**
@@ -21,7 +21,6 @@ export default class SystemSkill{
     }
     InitSkills(){
         new 闪现()
-        new 沟壑()
     }
 
     /**
@@ -29,14 +28,25 @@ export default class SystemSkill{
      */
     SkillPanel(unitEvent:UnitEvent){
         // UnitAddAbility(unitEvent.trigUnit,"ab01")
-        let buttonTexts = this.CanLearnSkillList(unitEvent.trigUnit)
+        let buttonTexts:string[] = []
+        let tlSKill:data_type[] = []
+
+        for(let skillId of this.CanLearnSkillList(unitEvent.trigUnit)){
+            
+            let skill = d_技能.find((item)=>item.id == skillId)
+            tlSKill.push(skill)
+            print("skillId",skillId,skill.Name)
+            buttonTexts.push(skill.Name)
+        }
+
         if(isAuto){
 
         }else{
             let unit = unitEvent.trigUnit
             let playerId = GetPlayerId(GetOwningPlayer(unit))
             DialogUtil.show(playerId, "选择技能", (i, text) => {
-                this.LearnSkill(unit,buttonTexts[i])
+                
+                this.LearnSkill(unit,tlSKill[i].id)
             }, ...buttonTexts)
         }
     }
@@ -51,13 +61,20 @@ export default class SystemSkill{
         }
         let tlSkill:string[] = []
         //筛选可学习的技能，并随机
-        d_技能演员.forEach((item)=>{
+        d_技能.forEach((item)=>{
             //添加规则
             tlSkill.push(item.id)
         })
-        print(tlSkill.length,"可学习的技能列表")
+        // for (let index = 0; index < d_技能.length; index++) {
+        //     // const element = d_技能[index];
+        //     tlSkill.push(index.toString())
+        // }
         let tl = RandomUtil.getRandomElementByObjArrays(4,"key",tlSkill)
         return tl
+    }
+
+    GetSkillById(skillId:string){
+        return d_技能.find((item)=>item.id == skillId)
     }
 
     /**
@@ -71,11 +88,9 @@ export default class SystemSkill{
             tmSkill = new Map()
             this.tmUnitSkill.set(playerId,tmSkill)
         }
-        
-        print(GetOwningPlayer(unit),skillId)
         // let res = UnitAddAbility(unit,("ab01"))
-        // UnitAddAbility(unit,skillId)
-        ActorAbilityUtil.createActorAbility(skillId,unit)
+        UnitAddAbility(unit,skillId)
+        // ActorAbilityUtil.createActorAbility(skillId,unit)
         // print("learn ability res",res)
     }
 
