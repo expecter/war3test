@@ -1,8 +1,12 @@
 import UnitUtil from "@/UnitUtil";
 import ActorTypeUtil from "@/util/ActorTypeUtil";
+import { BaseSkill } from "./BaseSkill";
+import { RegistSkill } from "./RegistSkill";
 
-export default class 闪现{
+RegistSkill("闪现")
+export class 闪现 extends BaseSkill{
     constructor(){
+        super()
         // let actorType = ActorTypeUtil.getActorType("闪现")
         // actorType.onAction = (actor, x, y, targetUnit)=>{
         //     UnitUtil.transfer(actor.unit,x,y)
@@ -20,6 +24,4 @@ export default class 闪现{
             UnitUtil.transfer(GetTriggerUnit(),GetLocationX(loc),GetLocationY(loc))
         })
     }
-
-    
 }

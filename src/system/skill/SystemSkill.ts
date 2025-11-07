@@ -1,11 +1,8 @@
 import DialogUtil from "@/DialogUtil";
 import UnitEvent from "@/event/UnitEvent";
-import Random from "@/Random";
 import RandomUtil from "@/RandomUtil";
-import ActorAbilityUtil from "@/util/ActorAbilityUtil";
-import 闪现 from "./闪现";
-import { d_技能演员 } from "xlsx/单位/技能演员";
 import { d_技能, data_type } from "xlsx/技能/技能";
+import { GetTlSkillClazz } from "./RegistSkill";
 
 export default class SystemSkill{
     /**
@@ -20,7 +17,9 @@ export default class SystemSkill{
         this.InitSkills()
     }
     InitSkills(){
-        new 闪现()
+        for(let clazz of GetTlSkillClazz()){
+            new clazz()
+        }
     }
 
     /**
