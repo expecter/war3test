@@ -1,27 +1,13 @@
 import UnitUtil from "@/UnitUtil";
 import ActorTypeUtil from "@/util/ActorTypeUtil";
-import { BaseSkill } from "./BaseSkill";
-import { RegistSkill } from "./RegistSkill";
+import { BaseSkill } from "../BaseSkill";
 
-RegistSkill("闪现")
 export class 闪现 extends BaseSkill{
     constructor(){
         super()
-        // let actorType = ActorTypeUtil.getActorType("闪现")
-        // actorType.onAction = (actor, x, y, targetUnit)=>{
-        //     UnitUtil.transfer(actor.unit,x,y)
-        // }
-        let trigger = CreateTrigger()
-        TriggerRegisterAnyUnitEventBJ(trigger,EVENT_PLAYER_UNIT_SPELL_EFFECT)
-        TriggerAddCondition(trigger,Condition(()=>{
-            if(id2string(GetSpellAbilityId())=="ANcl"){
-                return true
-            }
-            return false
-        }))
-        TriggerAddAction(trigger,()=>{
-            let loc = GetSpellTargetLoc()
-            UnitUtil.transfer(GetTriggerUnit(),GetLocationX(loc),GetLocationY(loc))
-        })
+        let actorType = ActorTypeUtil.getActorType("闪现")
+        actorType.onAction = (actor, x, y, targetUnit)=>{
+            UnitUtil.transfer(actor.unit,x,y)
+        }
     }
 }

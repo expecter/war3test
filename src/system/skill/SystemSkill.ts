@@ -2,9 +2,15 @@ import DialogUtil from "@/DialogUtil";
 import UnitEvent from "@/event/UnitEvent";
 import RandomUtil from "@/RandomUtil";
 import { d_技能, data_type } from "xlsx/技能/技能";
-import { GetTlSkillClazz } from "./RegistSkill";
 
 export default class SystemSkill{
+    闪现 = this.CreateSkill("闪现")
+    锤子 = this.CreateSkill("锤子")
+    CreateSkill(path:string){
+        let skill = require(`./behavior/${path}`)
+        return skill
+    }
+
     /**
      * 单位和已经学习的技能列表
      */
@@ -14,12 +20,6 @@ export default class SystemSkill{
         se.onHeroLevelUp((unitEvent)=>{
             this.SkillPanel( unitEvent)
         })
-        this.InitSkills()
-    }
-    InitSkills(){
-        for(let clazz of GetTlSkillClazz()){
-            new clazz()
-        }
     }
 
     /**

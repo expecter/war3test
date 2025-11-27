@@ -31,18 +31,6 @@ declare global {
 
 export const data: data_type[] = [
 	{
-		"id":"dwzdcjxt001",
-		"unitId":"H004",
-		"owner":11,
-		"loc":{
-			"x":100,
-			"y":0
-		},
-		"creationTime":0.01,
-		"count":1,
-		"area":200
-	},
-	{
 		"id":"dwzdcjxt002",
 		"unitId":"au01",
 		"owner":11,

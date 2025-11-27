@@ -1,3 +1,2 @@
-export class BaseSkill{
-    
+export abstract class BaseSkill{
 }

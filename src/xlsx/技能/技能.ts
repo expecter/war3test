@@ -153,26 +153,13 @@ export const data: data_type[] = [
 		},
 		"TargetArt":"Abilities\\Spells\\Other\\Volcano\\VolcanoDeath.mdl",
 		"Researchubertip":"\"Raigor用图腾撕裂地表，形成巨大的沟壑，8秒内不得通过，并造成伤害和晕眩。|n施法距离1200，冷却时间15秒。|n|n|cffffcc00等级 1|r - 造成75点的伤害，1秒的眩晕。|n消耗125秒的魔法。|n|cffffcc00等级 2|r - 造成145点的伤害，1.5秒的眩晕。|n消耗140秒的魔法。|n|cffffcc00等级 3|r - 造成210点的伤害，2秒的眩晕。|n消耗155秒的魔法。|n|cffffcc00等级 4|r - 造成320点的伤害，2秒的眩晕。|n消耗170秒的魔法。\"",
-		"SpecialArt":" ",
+		"SpecialArt":"",
 		"Researchhotkey":"F",
 		"Researchtip":"学习沟壑|cffffcc00F|rissure - [|cffffcc00等级 %d|r]",
 		"Animnames":"slam",
-		"Effectsound":" ",
+		"Effectsound":"",
 		"ResearchArt":"ReplaceableTextures\\CommandButtons\\BTNShockWave.blp",
 		"levels":4
-	},
-	{
-		"id":"ACcb",
-		"_parent":"ACcb",
-		"Name":"霜冻闪电"
-	},
-	{
-		"id":"ANcl",
-		"_parent":"ANcl",
-		"Name":"测试闪烁",
-		"Tip":"主动6",
-		"Art":"ReplaceableTextures\\CommandButtons\\BTNBlink.blp",
-		"DataC":3
 	}
 ]
 export const d_技能 = data;
